@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <clocale>
 
 struct Student {
     std::string name;
@@ -43,7 +42,7 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
-// НОВАЯ ФУНКЦИЯ: 
+// НОВАЯ ФУНКЦИЯ: Редактирование информации о студенте - добавлен выбор студента
 void editStudent(std::vector<Student>& database) {
     if (database.empty()) {
         std::cout << "База данных пуста. Нечего редактировать.\n";
@@ -51,11 +50,23 @@ void editStudent(std::vector<Student>& database) {
     }
     
     displayStudents(database);
-    std::cout << "Функция редактирования студента будет реализована в следующих коммитах.\n";
+    
+    int studentNumber;
+    std::cout << "Введите номер студента для редактирования (1-" << database.size() << "): ";
+    std::cin >> studentNumber;
+    
+    if (studentNumber < 1 || studentNumber > static_cast<int>(database.size())) {
+        std::cout << "Неверный номер студента.\n";
+        return;
+    }
+    
+    Student& student = database[studentNumber - 1];
+    
+    std::cout << "\nРедактирование студента: " << student.name << "\n";
+    std::cout << "В следующем коммите будет добавлено меню редактирования полей.\n";
 }
 
 int main() {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
     std::vector<Student> database;
 
     int choice;
@@ -63,7 +74,7 @@ int main() {
         std::cout << "\n=== Меню управления базой данных студентов ===\n";
         std::cout << "1. Добавить студента\n";
         std::cout << "2. Вывести список студентов\n";
-        std::cout << "3. Редактировать информацию о студенте\n"; // НОВЫЙ ПУНКТ МЕНЮ
+        std::cout << "3. Редактировать информацию о студенте\n";
         std::cout << "0. Выход\n";
         std::cout << "Выберите действие: ";
         std::cin >> choice;
@@ -75,7 +86,7 @@ int main() {
             case 2:
                 displayStudents(database);
                 break;
-            case 3: // НОВЫЙ КЕЙС ДЛЯ РЕДАКТИРОВАНИЯ
+            case 3:
                 editStudent(database);
                 break;
             case 0:
