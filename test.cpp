@@ -5,6 +5,8 @@
 #include <sstream>
 
 #include "test.h"
+#include "database.h"
+
 
 struct Student {
     std::string name;
