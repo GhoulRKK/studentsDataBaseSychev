@@ -8,15 +8,6 @@
 #include "database.h"
 
 
-struct Student {
-    std::string name;
-    int age;
-    std::string major;
-    double gpa;
-};
-
-
-void displayStudents(const std::vector<Student>& database);
 
 // Тест 1: Проверка создания структуры Student
 void testStudentCreation() {
