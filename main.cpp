@@ -4,6 +4,7 @@
 #include <limits> 
 #include <clocale>  
 
+#include "test.h"
 
 struct Student {
     std::string name;
@@ -153,7 +154,11 @@ void editStudent(std::vector<Student>& database) {
 int main() {
     std::vector<Student> database;
     setlocale(LC_ALL, "ru_RU.UTF-8");
+    runTests();
 
+    
+
+    
 
     int choice;
     do {
