@@ -42,7 +42,7 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
-// НОВАЯ ФУНКЦИЯ: Редактирование информации о студенте - добавлен выбор студента
+// НОВАЯ ФУНКЦИЯ: Полная реализация редактирования с меню выбора полей
 void editStudent(std::vector<Student>& database) {
     if (database.empty()) {
         std::cout << "База данных пуста. Нечего редактировать.\n";
@@ -62,8 +62,57 @@ void editStudent(std::vector<Student>& database) {
     
     Student& student = database[studentNumber - 1];
     
-    std::cout << "\nРедактирование студента: " << student.name << "\n";
-    std::cout << "В следующем коммите будет добавлено меню редактирования полей.\n";
+    int choice;
+    do {
+        std::cout << "\nРедактирование студента: " << student.name << "\n";
+        std::cout << "1. Изменить имя\n";
+        std::cout << "2. Изменить возраст\n";
+        std::cout << "3. Изменить специальность\n";
+        std::cout << "4. Изменить средний балл\n";
+        std::cout << "5. Показать текущую информацию\n";
+        std::cout << "0. Завершить редактирование\n";
+        std::cout << "Выберите действие: ";
+        std::cin >> choice;
+        
+        switch (choice) {
+            case 1:
+                std::cout << "Текущее имя: " << student.name << "\n";
+                std::cout << "Введите новое имя: ";
+                std::cin >> student.name;
+                std::cout << "Имя изменено.\n";
+                break;
+            case 2:
+                std::cout << "Текущий возраст: " << student.age << "\n";
+                std::cout << "Введите новый возраст: ";
+                std::cin >> student.age;
+                std::cout << "Возраст изменен.\n";
+                break;
+            case 3:
+                std::cout << "Текущая специальность: " << student.major << "\n";
+                std::cout << "Введите новую специальность: ";
+                std::cin >> student.major;
+                std::cout << "Специальность изменена.\n";
+                break;
+            case 4:
+                std::cout << "Текущий средний балл: " << student.gpa << "\n";
+                std::cout << "Введите новый средний балл: ";
+                std::cin >> student.gpa;
+                std::cout << "Средний балл изменен.\n";
+                break;
+            case 5:
+                std::cout << "\nТекущая информация о студенте:\n";
+                std::cout << "Имя: " << student.name << "\n";
+                std::cout << "Возраст: " << student.age << "\n";
+                std::cout << "Специальность: " << student.major << "\n";
+                std::cout << "Средний балл: " << student.gpa << "\n";
+                break;
+            case 0:
+                std::cout << "Редактирование завершено.\n";
+                break;
+            default:
+                std::cout << "Неверный выбор. Попробуйте снова.\n";
+        }
+    } while (choice != 0);
 }
 
 int main() {
