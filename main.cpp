@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits> // Для очистки буфера ввода
 
 struct Student {
     std::string name;
@@ -8,6 +9,12 @@ struct Student {
     std::string major;
     double gpa;
 };
+
+// НОВАЯ ФУНКЦИЯ: Для очистки буфера ввода
+void clearInputBuffer() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
 
 // Функция для добавления студента в базу данных
 void addStudent(std::vector<Student>& database) {
@@ -42,7 +49,7 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
-// НОВАЯ ФУНКЦИЯ: Полная реализация редактирования с меню выбора полей
+// Функция редактирования с улучшенной обработкой ввода
 void editStudent(std::vector<Student>& database) {
     if (database.empty()) {
         std::cout << "База данных пуста. Нечего редактировать.\n";
@@ -57,6 +64,7 @@ void editStudent(std::vector<Student>& database) {
     
     if (studentNumber < 1 || studentNumber > static_cast<int>(database.size())) {
         std::cout << "Неверный номер студента.\n";
+        clearInputBuffer();
         return;
     }
     
@@ -74,29 +82,33 @@ void editStudent(std::vector<Student>& database) {
         std::cout << "Выберите действие: ";
         std::cin >> choice;
         
+        clearInputBuffer(); 
+        
         switch (choice) {
             case 1:
                 std::cout << "Текущее имя: " << student.name << "\n";
                 std::cout << "Введите новое имя: ";
-                std::cin >> student.name;
+                std::getline(std::cin, student.name);
                 std::cout << "Имя изменено.\n";
                 break;
             case 2:
                 std::cout << "Текущий возраст: " << student.age << "\n";
                 std::cout << "Введите новый возраст: ";
                 std::cin >> student.age;
+                clearInputBuffer();
                 std::cout << "Возраст изменен.\n";
                 break;
             case 3:
                 std::cout << "Текущая специальность: " << student.major << "\n";
                 std::cout << "Введите новую специальность: ";
-                std::cin >> student.major;
+                std::getline(std::cin, student.major);
                 std::cout << "Специальность изменена.\n";
                 break;
             case 4:
                 std::cout << "Текущий средний балл: " << student.gpa << "\n";
                 std::cout << "Введите новый средний балл: ";
                 std::cin >> student.gpa;
+                clearInputBuffer();
                 std::cout << "Средний балл изменен.\n";
                 break;
             case 5:
@@ -127,7 +139,8 @@ int main() {
         std::cout << "0. Выход\n";
         std::cout << "Выберите действие: ";
         std::cin >> choice;
-
+        
+        clearInputBuffer(); 
         switch (choice) {
             case 1:
                 addStudent(database);
