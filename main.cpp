@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <clocale>
 
 struct Student {
     std::string name;
@@ -27,23 +28,42 @@ void addStudent(std::vector<Student>& database) {
 
 // Функция для вывода всех студентов из базы данных
 void displayStudents(const std::vector<Student>& database) {
+    if (database.empty()) {
+        std::cout << "База данных пуста.\n";
+        return;
+    }
+    
     std::cout << "Список студентов:\n";
-    for (const Student& student : database) {
-        std::cout << "Имя: " << student.name << "\n";
-        std::cout << "Возраст: " << student.age << "\n";
-        std::cout << "Специальность: " << student.major << "\n";
-        std::cout << "Средний балл: " << student.gpa << "\n\n";
+    for (size_t i = 0; i < database.size(); i++) {
+        std::cout << i + 1 << ". ";
+        std::cout << "Имя: " << database[i].name << "\n";
+        std::cout << "   Возраст: " << database[i].age << "\n";
+        std::cout << "   Специальность: " << database[i].major << "\n";
+        std::cout << "   Средний балл: " << database[i].gpa << "\n\n";
     }
 }
 
+// НОВАЯ ФУНКЦИЯ: 
+void editStudent(std::vector<Student>& database) {
+    if (database.empty()) {
+        std::cout << "База данных пуста. Нечего редактировать.\n";
+        return;
+    }
+    
+    displayStudents(database);
+    std::cout << "Функция редактирования студента будет реализована в следующих коммитах.\n";
+}
+
 int main() {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     std::vector<Student> database;
 
     int choice;
     do {
-        std::cout << "Меню:\n";
+        std::cout << "\n=== Меню управления базой данных студентов ===\n";
         std::cout << "1. Добавить студента\n";
         std::cout << "2. Вывести список студентов\n";
+        std::cout << "3. Редактировать информацию о студенте\n"; // НОВЫЙ ПУНКТ МЕНЮ
         std::cout << "0. Выход\n";
         std::cout << "Выберите действие: ";
         std::cin >> choice;
@@ -54,6 +74,9 @@ int main() {
                 break;
             case 2:
                 displayStudents(database);
+                break;
+            case 3: // НОВЫЙ КЕЙС ДЛЯ РЕДАКТИРОВАНИЯ
+                editStudent(database);
                 break;
             case 0:
                 std::cout << "Выход из программы.\n";
